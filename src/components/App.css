@@ -5,21 +5,22 @@
 .music-keyboard .key {
   display: inline-flex;
   flex-direction: column;
-  border: 1px solid black;
+  border: 1px solid burlywood;
   justify-content: flex-end;
   align-items: center;
+  color: burlywood;
 }
 
 .music-keyboard .key.white {
   height: 160px;
   width: 50px;
+  background-color: black;
 }
 
 .music-keyboard .key.black {
   height: 90px;
   width: 25px;
-  background-color: black;
-  color: white;
+  background-color: red;
   font-size: .8em;
   position: absolute;
   margin: 0 -15px

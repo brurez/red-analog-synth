@@ -1,4 +1,6 @@
-class EqMap<K, V> extends Map<K, V> {
+import {ObservableMap} from "mobx";
+
+class EqMap<K, V> extends ObservableMap<K, V> {
   public static isEqual(a, b): boolean {
     // Create arrays of property names
     const aProps = Object.getOwnPropertyNames(a);

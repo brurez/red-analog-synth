@@ -1,14 +1,20 @@
-import { observable } from "mobx";
+import { computed } from "mobx";
 import EqMap from "../utils/EqMap";
 import Note from "./Note";
 
 class AnalogSynth {
-  private ac: AudioContext;
   private playing: EqMap<Note, OscillatorNode> = new EqMap();
+  private ac: AudioContext;
   private output: AudioNode;
 
   constructor(ac: AudioContext) {
     this.ac = ac;
+  }
+
+  @computed
+  get pressedKeys(): string[] {
+    const notes = Array.from(this.playing.keys());
+    return notes.map(note => note.name);
   }
 
   public connectTo(output: AudioNode) {
@@ -16,6 +22,7 @@ class AnalogSynth {
   }
 
   public playTone(note: Note): void {
+    this.stopTone(note);
     const osc = this.ac.createOscillator();
     osc.connect(this.output);
     osc.type = "sawtooth";
@@ -25,8 +32,7 @@ class AnalogSynth {
   }
 
   public stopTone(note: Note): boolean {
-    console.log(this.playing);
-    if(this.playing.has(note)) {
+    if (this.playing.has(note)) {
       const playedNote = this.playing.get(note);
       if (playedNote) {
         playedNote.stop();
@@ -34,7 +40,6 @@ class AnalogSynth {
         return true;
       }
     }
-
     return false;
   }
 }

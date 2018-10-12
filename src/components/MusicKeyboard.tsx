@@ -1,6 +1,7 @@
 import cs from "classnames";
-// @ts-ignore
-import React from "react";
+import { observer } from "mobx-react";
+import * as React from "react";
+import AnalogSynth from "../audio/AnalogSynth";
 
 const notes = [
   ["", "C"],
@@ -12,29 +13,53 @@ const notes = [
   ["Bb", "B"]
 ];
 
-const Key = ({ note, className }) => (
-  <div key={note} className={cs("key", className)}>
-    <span>{note}</span>
-  </div>
-);
-
-const Octave = ({ octave }) => (
-  <div key={octave} className="octave">
-    {notes.map(note => (
-      <React.Fragment>
-        {note[0] && <Key note={note[0]} className="black" />}
-        <Key note={note[1]} className="white" />
-      </React.Fragment>
-    ))}
-  </div>
-);
-
-const MusicKeyboard = props => {
+const Key = ({ note, className, pressed }) => {
+  const styles = {
+    backgroundColor: pressed && "gray"
+  };
   return (
-    <div className="music-keyboard">
-      {[0, 1].map(octave => <Octave key={octave} octave={octave} />)}
+    <div key={note} className={cs("key", className)} style={styles}>
+      <span>{note}</span>
     </div>
   );
 };
+
+interface IMKeyboardProps {
+  synth: AnalogSynth;
+}
+
+@observer
+class MusicKeyboard extends React.Component<IMKeyboardProps> {
+  public render() {
+    return (
+      <div className="music-keyboard">
+        {[3, 4].map(octave => (
+          <div key={octave} className="octave">
+            {notes.map(note => (
+              <React.Fragment>
+                {note[0] && (
+                  <Key
+                    note={note[0]}
+                    className="black"
+                    pressed={this.isPressed(note[0], octave)}
+                  />
+                )}
+                <Key
+                  note={note[1]}
+                  className="white"
+                  pressed={this.isPressed(note[1], octave)}
+                />
+              </React.Fragment>
+            ))}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  private isPressed(note, octave) {
+    return this.props.synth.pressedKeys.indexOf(`${note}${octave}`) >= 0;
+  }
+}
 
 export default MusicKeyboard;
