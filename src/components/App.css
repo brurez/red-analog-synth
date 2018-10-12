@@ -9,6 +9,8 @@
   justify-content: flex-end;
   align-items: center;
   color: burlywood;
+  cursor: pointer;
+  user-select: none;
 }
 
 .music-keyboard .key.white {

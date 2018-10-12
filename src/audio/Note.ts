@@ -17,11 +17,11 @@ export type Pitch =
 export type Octave = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 class Note {
-  public pitch: Pitch = "C";
+  public pitch: string = "C";
   public octave: number = 3;
   public velocity: number = 128;
 
-  constructor(pitch?: Pitch, octave?: number) {
+  constructor(pitch?: string, octave?: number) {
     if (pitch) { this.pitch = pitch; }
     if (octave) { this.octave = octave; }
   }

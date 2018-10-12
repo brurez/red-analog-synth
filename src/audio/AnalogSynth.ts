@@ -33,9 +33,10 @@ class AnalogSynth {
 
   public stopTone(note: Note): boolean {
     if (this.playing.has(note)) {
-      const playedNote = this.playing.get(note);
-      if (playedNote) {
-        playedNote.stop();
+      const osc = this.playing.get(note);
+      if (osc) {
+        osc.stop();
+        osc.disconnect(this.output);
         this.playing.delete(note);
         return true;
       }
