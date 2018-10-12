@@ -1,10 +1,34 @@
 import { FREQUENCIES } from "./constants";
 
-class Note implements INote {
-  public pitch = "C";
-  public octave = 3;
-  public duration = 1;
-  public velocity = 128;
+export type Pitch =
+  | "A"
+  | "Bb"
+  | "B"
+  | "C"
+  | "Db"
+  | "D"
+  | "Eb"
+  | "E"
+  | "F"
+  | "Gb"
+  | "G"
+  | "Ab";
+
+export type Octave = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+class Note {
+  public pitch: Pitch = "C";
+  public octave: Octave = 3;
+  public velocity: number = 128;
+
+  constructor(pitch?: Pitch, octave?: Octave) {
+    if (pitch) { this.pitch = pitch; }
+    if (octave) { this.octave = octave; }
+  }
+
+  get name(): string {
+    return `${this.pitch}${this.octave}`;
+  }
 
   get frequency(): number {
     const base = FREQUENCIES[this.pitch];

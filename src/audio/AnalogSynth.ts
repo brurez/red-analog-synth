@@ -1,26 +1,36 @@
-class AnalogSynth implements IInstrument {
-  public bpm: number;
-    private ac: AudioContext;
-  private readonly oscillators: OscillatorNode[];
+import Note from "./Note";
 
-  constructor(ac: AudioContext, bpm: number) {
-    this.oscillators = [];
-    this.oscillators[0] = ac.createOscillator();
-    this.oscillators[0].type = "sawtooth";
-    this.bpm = bpm;
+class AnalogSynth {
+  private ac: AudioContext;
+  private tones: object = {};
+  private output: AudioNode;
+
+  constructor(ac: AudioContext) {
     this.ac = ac;
   }
 
-  public connect(node: AudioNode) {
-    this.oscillators.forEach(osc => osc.connect(node));
+  public connectTo(output: AudioNode) {
+    this.output = output;
   }
 
-  public play(note: INote): void {
-    this.oscillators.forEach(osc => {
-      osc.frequency.value = note.frequency;
-      osc.start(0);
-      osc.stop(this.ac.currentTime + (note.duration * 60) / this.bpm);
-    });
+  public playTone(note: Note): void {
+    this.stopTone(note);
+    const osc = this.ac.createOscillator();
+    osc.connect(this.output);
+    osc.type = "sawtooth";
+    osc.frequency.value = note.frequency;
+    osc.start(0);
+    this.tones[note.name] = osc;
+  }
+
+  public stopTone(note: Note): boolean {
+    if(this.tones[note.name]) {
+      this.tones[note.name].stop();
+      delete this.tones[note.name];
+      return true;
+    }
+
+    return false;
   }
 }
 

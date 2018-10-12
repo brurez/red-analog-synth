@@ -17,6 +17,14 @@ describe("Note", () => {
     expect(note.frequency).toBeLessThan(130.82);
   });
 
+  it("returns right frequency on E3", () => {
+    const note = new Note();
+    note.pitch = "E";
+    note.octave = 3;
+    expect(note.frequency).toBeGreaterThan(164);
+    expect(note.frequency).toBeLessThan(165);
+  });
+
   it("returns right frequency on C2", () => {
     const note = new Note();
     note.pitch = "C";

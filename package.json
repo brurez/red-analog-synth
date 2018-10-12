@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "hotkeys-js": "^3.3.8",
+    "mobx": "^5.5.0",
+    "mobx-react": "^5.2.8",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts-ts": "3.1.0"

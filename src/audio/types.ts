@@ -1,12 +1,7 @@
-interface INote {
-  pitch: string;
-  octave: number;
-  duration: number;
-  velocity: number;
-  readonly frequency: number;
-}
+import Note from "./Note";
 
 interface IInstrument {
-  play(note: INote): void;
+  playTone(tone: Note): void;
+  stopTone(tone: Note): boolean;
   connect(node: AudioNode | AudioParam): void;
 }
