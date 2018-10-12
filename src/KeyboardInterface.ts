@@ -1,6 +1,9 @@
+import { observable } from "mobx";
 import Note from "./audio/Note";
 
 type NoteCb = (note: Note) => any;
+
+type Octave = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 class KeyboardInterface {
   public static readonly keyMap = {
@@ -21,7 +24,7 @@ class KeyboardInterface {
     y: "Ab"
   };
 
-  private octave: any;
+  @observable private octave: number;
   private noteStartCb: NoteCb;
   private noteStopCb: NoteCb;
 
@@ -40,28 +43,36 @@ class KeyboardInterface {
 
   private listenKeyboardEvents(): void {
     document.addEventListener("keydown", ({ key }) => {
-      if (['a', 's', 'd', 'f', 'g', 'h', 'j', 'w', 'e', 't', 'y', 'u'].indexOf(key) >= 0) {
+      if (
+        ["a", "s", "d", "f", "g", "h", "j", "w", "e", "t", "y", "u"].indexOf(
+          key
+        ) >= 0
+      ) {
         const note = new Note(KeyboardInterface.keyMap[key], this.octave);
         this.noteStartCb(note);
       }
-      if (['k', 'l', 'o'].indexOf(key) >= 0) {
+      if (["k", "l", "o"].indexOf(key) >= 0) {
         const note = new Note(KeyboardInterface.keyMap[key], this.octave + 1);
         this.noteStartCb(note);
       }
-      if(key === 'z') {
+      if (key === "z") {
         this.octave -= 1;
       }
-      if(key === 'x') {
+      if (key === "x") {
         this.octave += 1;
       }
     });
 
     document.addEventListener("keyup", ({ key }) => {
-      if (['a', 's', 'd', 'f', 'g', 'h', 'j', 'w', 'e', 't', 'y', 'u'].indexOf(key) >= 0) {
+      if (
+        ["a", "s", "d", "f", "g", "h", "j", "w", "e", "t", "y", "u"].indexOf(
+          key
+        ) >= 0
+      ) {
         const note = new Note(KeyboardInterface.keyMap[key], this.octave);
         this.noteStopCb(note);
       }
-      if (['k', 'l', 'o'].indexOf(key) >= 0) {
+      if (["k", "l", "o"].indexOf(key) >= 0) {
         const note = new Note(KeyboardInterface.keyMap[key], this.octave + 1);
         this.noteStopCb(note);
       }

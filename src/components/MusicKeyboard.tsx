@@ -2,6 +2,7 @@ import cs from "classnames";
 import { observer } from "mobx-react";
 import * as React from "react";
 import AnalogSynth from "../audio/AnalogSynth";
+import KeyboardInterface from "../KeyboardInterface";
 
 const notes = [
   ["", "C"],
@@ -26,28 +27,33 @@ const Key = ({ note, className, pressed }) => {
 
 interface IMKeyboardProps {
   synth: AnalogSynth;
+  keyboard: KeyboardInterface;
 }
 
 @observer
 class MusicKeyboard extends React.Component<IMKeyboardProps> {
   public render() {
+    const {
+      keyboard: { octave }
+    } = this.props;
+
     return (
       <div className="music-keyboard">
-        {[3, 4].map(octave => (
-          <div key={octave} className="octave">
+        {[octave, octave + 1].map(oct => (
+          <div key={oct} className="octave">
             {notes.map(note => (
               <React.Fragment>
                 {note[0] && (
                   <Key
                     note={note[0]}
                     className="black"
-                    pressed={this.isPressed(note[0], octave)}
+                    pressed={this.isPressed(note[0], oct)}
                   />
                 )}
                 <Key
                   note={note[1]}
                   className="white"
-                  pressed={this.isPressed(note[1], octave)}
+                  pressed={this.isPressed(note[1], oct)}
                 />
               </React.Fragment>
             ))}
