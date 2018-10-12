@@ -15,7 +15,7 @@
     "noImplicitThis": true,
     "noImplicitAny": false,
     "importHelpers": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": false,
     "experimentalDecorators": true

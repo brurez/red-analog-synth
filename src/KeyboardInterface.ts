@@ -68,7 +68,7 @@ class KeyboardInterface {
 
     document.addEventListener("keyup", ({ key }) => {
       this.pressed.delete(key);
-      
+
       if (
         ["a", "s", "d", "f", "g", "h", "j", "w", "e", "t", "y", "u"].indexOf(
           key
