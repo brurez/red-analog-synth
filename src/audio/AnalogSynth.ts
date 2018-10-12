@@ -1,8 +1,10 @@
+import { observable } from "mobx";
+import EqMap from "../utils/EqMap";
 import Note from "./Note";
 
 class AnalogSynth {
   private ac: AudioContext;
-  private tones: object = {};
+  private playing: EqMap<Note, OscillatorNode> = new EqMap();
   private output: AudioNode;
 
   constructor(ac: AudioContext) {
@@ -14,20 +16,23 @@ class AnalogSynth {
   }
 
   public playTone(note: Note): void {
-    this.stopTone(note);
     const osc = this.ac.createOscillator();
     osc.connect(this.output);
     osc.type = "sawtooth";
     osc.frequency.value = note.frequency;
     osc.start(0);
-    this.tones[note.name] = osc;
+    this.playing.set(note, osc);
   }
 
   public stopTone(note: Note): boolean {
-    if(this.tones[note.name]) {
-      this.tones[note.name].stop();
-      delete this.tones[note.name];
-      return true;
+    console.log(this.playing);
+    if(this.playing.has(note)) {
+      const playedNote = this.playing.get(note);
+      if (playedNote) {
+        playedNote.stop();
+        this.playing.delete(note);
+        return true;
+      }
     }
 
     return false;

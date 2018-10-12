@@ -1,8 +1,8 @@
-import Note from "./Note";
+import Note from "./audio/Note";
 
 type NoteCb = (note: Note) => any;
 
-class Keyboard {
+class KeyboardInterface {
   public static readonly keyMap = {
     a: "C",
     s: "D",
@@ -41,11 +41,11 @@ class Keyboard {
   private listenKeyboardEvents(): void {
     document.addEventListener("keydown", ({ key }) => {
       if (['a', 's', 'd', 'f', 'g', 'h', 'j', 'w', 'e', 't', 'y', 'u'].indexOf(key) >= 0) {
-        const note = new Note(Keyboard.keyMap[key], this.octave);
+        const note = new Note(KeyboardInterface.keyMap[key], this.octave);
         this.noteStartCb(note);
       }
       if (['k', 'l', 'o'].indexOf(key) >= 0) {
-        const note = new Note(Keyboard.keyMap[key], this.octave + 1);
+        const note = new Note(KeyboardInterface.keyMap[key], this.octave + 1);
         this.noteStartCb(note);
       }
       if(key === 'z') {
@@ -58,15 +58,15 @@ class Keyboard {
 
     document.addEventListener("keyup", ({ key }) => {
       if (['a', 's', 'd', 'f', 'g', 'h', 'j', 'w', 'e', 't', 'y', 'u'].indexOf(key) >= 0) {
-        const note = new Note(Keyboard.keyMap[key], this.octave);
+        const note = new Note(KeyboardInterface.keyMap[key], this.octave);
         this.noteStopCb(note);
       }
       if (['k', 'l', 'o'].indexOf(key) >= 0) {
-        const note = new Note(Keyboard.keyMap[key], this.octave + 1);
+        const note = new Note(KeyboardInterface.keyMap[key], this.octave + 1);
         this.noteStopCb(note);
       }
     });
   }
 }
 
-export default Keyboard;
+export default KeyboardInterface;

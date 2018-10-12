@@ -2,7 +2,7 @@ import * as React from "react";
 import "./App.css";
 
 import AnalogSynth from "../audio/AnalogSynth";
-import Keyboard from "../audio/Keyboard";
+import KeyboardInterface from "../KeyboardInterface";
 import MusicKeyboard from './MusicKeyboard';
 
 class App extends React.Component {
@@ -11,12 +11,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     const ac = new AudioContext();
-    const key = new Keyboard();
+    const key = new KeyboardInterface();
     const synth = new AnalogSynth(ac);
     synth.connectTo(ac.destination);
 
     key.registerForNoteStart(note => synth.playTone(note));
-    key.registerForNoteStop(note => synth.stopTone(note));
+    key.registerForNoteStop(note => {
+      synth.stopTone(note)
+    });
   }
 
   public render() {

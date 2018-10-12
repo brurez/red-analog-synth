@@ -16,11 +16,11 @@
 }
 
 .music-keyboard .key.black {
-  height: 100px;
+  height: 90px;
   width: 25px;
   background-color: black;
   color: white;
   font-size: .8em;
   position: absolute;
-  margin: -15px
+  margin: 0 -15px
 }
