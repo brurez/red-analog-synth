@@ -1,7 +1,8 @@
+import cs from "classnames";
 // @ts-ignore
 import React from "react";
 
-const keys = [
+const notes = [
   ["", "C"],
   ["Db", "D"],
   ["Eb", "E"],
@@ -11,29 +12,27 @@ const keys = [
   ["Bb", "B"]
 ];
 
+const Key = ({ note, className }) => (
+  <div key={note} className={cs("key", className)}>
+    <span>{note}</span>
+  </div>
+);
+
+const Octave = ({ octave }) => (
+  <div key={octave} className="octave">
+    {notes.map(note => (
+      <React.Fragment>
+        {note[0] && <Key note={note[0]} className="black" />}
+        <Key note={note[1]} className="white" />
+      </React.Fragment>
+    ))}
+  </div>
+);
+
 const MusicKeyboard = props => {
   return (
     <div className="music-keyboard">
-      {[0, 1].map(octave => (
-        <div key={octave} className="octave">
-          {keys.map(key => (
-            <React.Fragment>
-              <div className="black keys">
-                {key[0] && (
-                  <div key={key[0]} className="key black">
-                    <span>{key[0]}</span>
-                  </div>
-                )}
-              </div>
-              <div className="white keys">
-                <div key={key[1]} className="key white">
-                  <span>{key[1]}</span>
-                </div>
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
-      ))}
+      {[0, 1].map(octave => <Octave key={octave} octave={octave} />)}
     </div>
   );
 };

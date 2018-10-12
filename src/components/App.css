@@ -2,16 +2,6 @@
   display: inline-block;
 }
 
-.music-keyboard .keys {
-  display: inline-block;
-}
-
-.music-keyboard .black.keys {
-position: absolute;
-margin: -15px
-}
-
-
 .music-keyboard .key {
   display: inline-flex;
   flex-direction: column;
@@ -31,4 +21,6 @@ margin: -15px
   background-color: black;
   color: white;
   font-size: .8em;
+  position: absolute;
+  margin: -15px
 }
