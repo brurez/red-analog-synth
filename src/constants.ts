@@ -1,4 +1,4 @@
-export const FREQUENCIES = {
+export const NOTE_FREQUENCIES = {
   C: 130.81,
   Db: 138.59,
   D: 146.83,

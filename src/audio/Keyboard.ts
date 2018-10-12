@@ -1,4 +1,3 @@
-import hotkeys from "hotkeys-js";
 import Note from "./Note";
 
 type NoteCb = (note: Note) => any;
@@ -49,6 +48,12 @@ class Keyboard {
         const note = new Note(Keyboard.keyMap[key], this.octave + 1);
         this.noteStartCb(note);
       }
+      if(key === 'z') {
+        this.octave -= 1;
+      }
+      if(key === 'x') {
+        this.octave += 1;
+      }
     });
 
     document.addEventListener("keyup", ({ key }) => {
@@ -61,9 +66,6 @@ class Keyboard {
         this.noteStopCb(note);
       }
     });
-
-    hotkeys("z", () => (this.octave -= 1));
-    hotkeys("x", () => (this.octave += 1));
   }
 }
 

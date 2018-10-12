@@ -3,7 +3,7 @@ import "./App.css";
 
 import AnalogSynth from "../audio/AnalogSynth";
 import Keyboard from "../audio/Keyboard";
-import logo from "../logo.svg";
+import MusicKeyboard from './MusicKeyboard';
 
 class App extends React.Component {
   private ac: AudioContext;
@@ -22,13 +22,7 @@ class App extends React.Component {
   public render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <MusicKeyboard/>
       </div>
     );
   }

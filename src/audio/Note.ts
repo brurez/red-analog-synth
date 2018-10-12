@@ -1,4 +1,4 @@
-import { FREQUENCIES } from "./constants";
+import { NOTE_FREQUENCIES } from "../constants";
 
 export type Pitch =
   | "A"
@@ -31,7 +31,7 @@ class Note {
   }
 
   get frequency(): number {
-    const base = FREQUENCIES[this.pitch];
+    const base = NOTE_FREQUENCIES[this.pitch];
     return base * (1 / Math.pow(2, 3 - this.octave));
   }
 }
