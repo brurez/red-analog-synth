@@ -1,9 +1,11 @@
 .knob {
     display: inline-block;
+    padding: 6px;
 }
 
 .knob .label {
     text-align: center;
+    line-height: 1.4em;
 }
 
 .knob svg {

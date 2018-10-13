@@ -4,6 +4,7 @@ import Note from "./Note";
 
 class AnalogSynth {
   @observable private $filterFreq: number = 2000;
+  @observable private $filterQ: number = 1;
 
   @observable private voices: AnalogVoice[];
   private ac: AudioContext;
@@ -27,6 +28,18 @@ class AnalogSynth {
   }
 
   @computed
+  get filterQ() {
+    return this.$filterQ;
+  }
+
+  set filterQ(value) {
+    this.voices.forEach(v =>  {
+      v.filter.Q.value = value;
+    });
+    this.$filterQ = value;
+  }
+
+  @computed
   get tonesPlayingNow(): string[] {
     return this.voices.map(v => v.note && v.note.name);
   }
@@ -39,8 +52,10 @@ class AnalogSynth {
     this.stop(note);
     const voice = new AnalogVoice(this.ac);
     voice.filter.frequency.value = this.filterFreq;
+    voice.filter.Q.value = this.filterQ;
     voice.connect(this.ac.destination);
     voice.play(note);
+
     this.voices.push(voice);
   }
 

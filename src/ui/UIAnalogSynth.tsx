@@ -10,9 +10,7 @@ interface IProps {
 @observer
 class UIAnalogSynth extends React.Component<IProps> {
   public render() {
-    const {
-      synth }
-     = this.props;
+    const { synth } = this.props;
 
     return (
       <div className="analog-synth">
@@ -20,8 +18,15 @@ class UIAnalogSynth extends React.Component<IProps> {
           value={synth.filterFreq}
           minValue={0}
           maxValue={22050}
-          onChange={value => synth.filterFreq = value}
+          onChange={value => (synth.filterFreq = value)}
           label="CUTOFF"
+        />
+        <Knob
+          value={synth.filterQ}
+          minValue={0.001}
+          maxValue={50}
+          onChange={value => (synth.filterQ = value)}
+          label="Q"
         />
       </div>
     );
