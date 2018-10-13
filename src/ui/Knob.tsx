@@ -3,8 +3,8 @@ import "./Knob.css";
 
 interface IProps {
   label: string;
-  min: number;
-  max: number;
+  minValue: number;
+  maxValue: number;
   value: number;
   onChange: any;
 }
@@ -14,12 +14,20 @@ interface IState {
 }
 
 class Knob extends React.Component<IProps, IState> {
+  private readonly range: number;
+
   constructor(props) {
     super(props);
+
+    this.range = 300; // degrees
+
     this.handleDragStart = this.handleDragStart.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
   }
+
   public render() {
+    const { value } = this.props;
+
     const styles = {
       transform: `rotate(${this.angle()}deg)`
     };
@@ -79,6 +87,9 @@ class Knob extends React.Component<IProps, IState> {
             </g>
           </svg>
         </div>
+        <div className="label" style={{ color: "gray" }}>
+          {value.toFixed(0)}
+        </div>
       </div>
     );
   }
@@ -92,14 +103,13 @@ class Knob extends React.Component<IProps, IState> {
 
   private handleDrag(e) {
     const { clientY } = e;
-    const { max, min, value } = this.props;
+    const { maxValue: max, minValue: min, value } = this.props;
 
     if (clientY !== this.state.clientY) {
       const delta = clientY - this.state.clientY;
-      // const r = value / (max - min) + delta;
-      let result = value + delta * 40;
+      let result = value + (delta * (max - min)) / this.range;
       result = result > max ? max : result;
-      result = result < min ? min: result;
+      result = result < min ? min : result;
 
       this.props.onChange(result);
       this.setState({ clientY });
@@ -107,9 +117,9 @@ class Knob extends React.Component<IProps, IState> {
   }
 
   private angle() {
-    const { max, min, value } = this.props;
+    const { maxValue: max, minValue: min, value } = this.props;
     const r = value / (max - min);
-    return r * 360 - 180;
+    return r * this.range - this.range / 2;
   }
 }
 

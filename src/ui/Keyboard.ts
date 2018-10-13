@@ -1,9 +1,7 @@
-import { observable } from "mobx";
-import Note from "./audio/Note";
-
+import Note from "../entities/Note";
 type NoteCb = (note: Note) => any;
 
-class KeyboardInterface {
+class Keyboard {
   public static readonly keyMap = {
     a: "C",
     s: "D",
@@ -22,15 +20,15 @@ class KeyboardInterface {
     y: "Ab"
   };
 
-  @observable private octave: number;
   private noteStartCb: NoteCb;
   private noteStopCb: NoteCb;
   private pressed = new Set();
+  private store: IStore;
 
 
-  constructor() {
-    this.octave = 3;
+  constructor(store) {
     this.listenKeyboardEvents();
+    this.store = store;
   }
 
   public registerForNoteStart(callback: NoteCb): void {
@@ -49,18 +47,18 @@ class KeyboardInterface {
             key
           ) >= 0
         ) {
-          const note = new Note(KeyboardInterface.keyMap[key], this.octave);
+          const note = new Note(Keyboard.keyMap[key], this.store.octave);
           this.noteStartCb(note);
         }
         if (["k", "l", "o"].indexOf(key) >= 0) {
-          const note = new Note(KeyboardInterface.keyMap[key], this.octave + 1);
+          const note = new Note(Keyboard.keyMap[key], this.store.octave + 1);
           this.noteStartCb(note);
         }
         if (key === "z") {
-          this.octave -= 1;
+          this.store.octave -= 1;
         }
         if (key === "x") {
-          this.octave += 1;
+          this.store.octave += 1;
         }
         this.pressed.add(key);
       }
@@ -74,15 +72,15 @@ class KeyboardInterface {
           key
         ) >= 0
       ) {
-        const note = new Note(KeyboardInterface.keyMap[key], this.octave);
+        const note = new Note(Keyboard.keyMap[key], this.store.octave);
         this.noteStopCb(note);
       }
       if (["k", "l", "o"].indexOf(key) >= 0) {
-        const note = new Note(KeyboardInterface.keyMap[key], this.octave + 1);
+        const note = new Note(Keyboard.keyMap[key], this.store.octave + 1);
         this.noteStopCb(note);
       }
     });
   }
 }
 
-export default KeyboardInterface;
+export default Keyboard;

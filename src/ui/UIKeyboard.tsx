@@ -1,9 +1,9 @@
 import cs from "classnames";
 import { observer } from "mobx-react";
 import * as React from "react";
-import AnalogSynth from "../audio/AnalogSynth";
-import Note from "../audio/Note";
-import KeyboardInterface from "../KeyboardInterface";
+import AnalogSynth from "../entities/AnalogSynth";
+import Note from "../entities/Note";
+import Keyboard from "./Keyboard";
 
 const notes = [
   ["", "C"],
@@ -40,16 +40,16 @@ const Key = ({
   );
 };
 
-interface IMKeyboardProps {
+interface IProps {
   synth: AnalogSynth;
-  keyboard: KeyboardInterface;
+  store: IStore;
 }
 
 @observer
-class MusicKeyboard extends React.Component<IMKeyboardProps> {
+class UIKeyboard extends React.Component<IProps> {
   public render() {
     const {
-      keyboard: { octave }
+      store: { octave }
     } = this.props;
 
     return (
@@ -88,18 +88,18 @@ class MusicKeyboard extends React.Component<IMKeyboardProps> {
     const { synth } = this.props;
     console.log(pitch);
     const note = new Note(pitch, octave);
-    synth.playTone(note);
+    synth.play(note);
   }
 
   private handleMouseUp(pitch: string, octave: number): void {
     const { synth } = this.props;
     const note = new Note(pitch, octave);
-    synth.stopTone(note);
+    synth.stop(note);
   }
 
   private isPressed(note, octave) {
-    return this.props.synth.pressedKeys.indexOf(`${note}${octave}`) >= 0;
+    return this.props.synth.tonesPlayingNow.indexOf(`${note}${octave}`) >= 0;
   }
 }
 
-export default MusicKeyboard;
+export default UIKeyboard;

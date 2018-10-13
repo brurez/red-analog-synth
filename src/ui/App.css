@@ -5,12 +5,14 @@
 .music-keyboard .key {
   display: inline-flex;
   flex-direction: column;
-  border: 1px solid burlywood;
+  border: 1px solid dimgray;
   justify-content: flex-end;
   align-items: center;
   color: burlywood;
   cursor: pointer;
   user-select: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 
 .music-keyboard .key.white {
@@ -26,4 +28,8 @@
   font-size: .8em;
   position: absolute;
   margin: 0 -15px
+}
+
+.analog-synth {
+
 }
