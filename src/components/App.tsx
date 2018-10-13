@@ -8,7 +8,14 @@ import KeyboardInterface from "../KeyboardInterface";
 import Knob from "./Knob";
 import MusicKeyboard from "./MusicKeyboard";
 
-class App extends React.Component {
+interface IState {
+  value: number;
+}
+
+class App extends React.Component<{}, IState> {
+  public state: Readonly<IState> = {
+    value: 2000
+  };
   private ac: AudioContext;
   private synth: AnalogSynth;
   private keyboard: KeyboardInterface;
@@ -29,31 +36,20 @@ class App extends React.Component {
   }
 
   public render() {
-    // @ts-ignore
-    // @ts-ignore
+    console.log(this.state.value)
     return (
-        <div className="App">
-          <Knob
-            size={100}
-            numTicks={25}
-            degrees={260}
-            min={1}
-            max={100}
-            value={30}
-            color={true}
-            onChange={this.handleChange}
-          />
-
-          <Knob
-            numTicks={125}
-            degrees={180}
-            min={1}
-            max={100}
-            value={0}
-            onChange={this.handleChange}
-          />
-          <MusicKeyboard synth={this.synth} keyboard={this.keyboard}/>
-        </div>
+      <div className="App">
+        <Knob
+          min={0}
+          max={4000}
+          value={this.state.value}
+          label="CUTOFF"
+          onChange={value => {
+            this.setState({ value });
+          }}
+        />
+        <MusicKeyboard synth={this.synth} keyboard={this.keyboard} />
+      </div>
     );
   }
 

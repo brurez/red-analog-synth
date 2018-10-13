@@ -1,0 +1,11 @@
+.knob {
+    display: inline-block;
+}
+
+.knob .label {
+    text-align: center;
+}
+
+.knob svg {
+    cursor: pointer;
+}
