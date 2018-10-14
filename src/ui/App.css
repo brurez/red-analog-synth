@@ -31,5 +31,10 @@
 }
 
 .analog-synth {
+  display: flex;
+  align-items: center;
+}
 
+.analog-synth > div {
+  margin-right: 10px
 }

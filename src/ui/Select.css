@@ -1,0 +1,28 @@
+.light-select {
+    display: flex;
+}
+
+.light-select .light {
+    border-radius: 50%;
+    border: 1px solid black;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+}
+
+.light-select .light.on {
+    background-color: red;
+}
+
+.light-select .item {
+    margin: 6px;
+}
+
+.choice {
+    display: inline-flex;
+}
+
+.choice .button {
+    margin: 6px;
+    cursor: pointer;
+}

@@ -7,6 +7,7 @@ interface IProps {
   maxValue: number;
   value: number;
   onChange: any;
+  size: number;
 }
 
 interface IState {
@@ -45,8 +46,8 @@ class Knob extends React.Component<IProps, IState> {
           <svg
             style={styles}
             xmlns="http://www.w3.org/2000/svg"
-            width="54"
-            height="54.002"
+            width={this.props.size || 54}
+            height={this.props.size || 54}
             viewBox="0 0 14.2875 14.288095"
             id="svg16908"
           >

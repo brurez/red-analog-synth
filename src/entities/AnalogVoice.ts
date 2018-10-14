@@ -13,7 +13,7 @@ class AnalogVoice {
     const gain = ac.createGain();
 
     const osc = ac.createOscillator();
-    osc.type = "square";
+    osc.type = "sawtooth";
 
     osc.connect(filter);
     filter.connect(gain);

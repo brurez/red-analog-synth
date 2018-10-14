@@ -3,16 +3,18 @@ import AnalogVoice from "./AnalogVoice";
 import Note from "./Note";
 
 class AnalogSynth {
-  @observable private $filterFreq: number = 2000;
-  @observable private $filterQ: number = 1;
 
-  @observable private voices: AnalogVoice[];
-  private ac: AudioContext;
-  private output: AudioNode;
+  @computed
+  get wave() {
+    return this.$wave;
+  }
 
-  constructor(ac: AudioContext) {
-    this.voices = [];
-    this.ac = ac;
+  set wave(value) {
+    this.voices.forEach(v => {
+      // @ts-ignore
+      v.osc.type = AnalogSynth.waves[value];
+    });
+    this.$wave = value;
   }
 
   @computed
@@ -21,8 +23,8 @@ class AnalogSynth {
   }
 
   set filterFreq(value) {
-    this.voices.forEach(v =>  {
-        v.filter.frequency.value = value;
+    this.voices.forEach(v => {
+      v.filter.frequency.value = value;
     });
     this.$filterFreq = value;
   }
@@ -33,7 +35,7 @@ class AnalogSynth {
   }
 
   set filterQ(value) {
-    this.voices.forEach(v =>  {
+    this.voices.forEach(v => {
       v.filter.Q.value = value;
     });
     this.$filterQ = value;
@@ -44,6 +46,20 @@ class AnalogSynth {
     return this.voices.map(v => v.note && v.note.name);
   }
 
+  public static waves = ["sawtooth", "triangle", "square", "sine"];
+  @observable private $filterFreq: number = 2000;
+  @observable private $filterQ: number = 1;
+  @observable private $wave: number = 0;
+
+  @observable private voices: AnalogVoice[];
+  private ac: AudioContext;
+  private output: AudioNode;
+
+  constructor(ac: AudioContext) {
+    this.voices = [];
+    this.ac = ac;
+  }
+
   public connectTo(output: AudioNode) {
     this.output = output;
   }
@@ -51,6 +67,8 @@ class AnalogSynth {
   public play(note: Note): void {
     this.stop(note);
     const voice = new AnalogVoice(this.ac);
+    // @ts-ignore
+    voice.osc.type = AnalogSynth.waves[this.wave];
     voice.filter.frequency.value = this.filterFreq;
     voice.filter.Q.value = this.filterQ;
     voice.connect(this.ac.destination);
@@ -60,7 +78,9 @@ class AnalogSynth {
   }
 
   public stop(note: Note): boolean {
-     const index =  this.voices.findIndex(v => v.note && v.note.name === note.name);
+    const index = this.voices.findIndex(
+      v => v.note && v.note.name === note.name
+    );
 
     if (index === -1) {
       return false;

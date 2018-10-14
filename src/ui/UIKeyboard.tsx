@@ -3,7 +3,6 @@ import { observer } from "mobx-react";
 import * as React from "react";
 import AnalogSynth from "../entities/AnalogSynth";
 import Note from "../entities/Note";
-import Keyboard from "./Keyboard";
 
 const notes = [
   ["", "C"],
