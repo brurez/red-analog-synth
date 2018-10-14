@@ -6,7 +6,7 @@ class AnalogVoice {
   public osc: OscillatorNode;
   public note: Note;
 
-  constructor(ac) {
+  constructor(ac, filterEnv) {
     const filter = ac.createBiquadFilter();
     filter.type = 'lowpass';
 
@@ -18,9 +18,17 @@ class AnalogVoice {
     osc.connect(filter);
     filter.connect(gain);
 
+    filterEnv.applyTo(filter.frequency, ac.currentTime);
+
     this.filter = filter;
     this.gain = gain;
     this.osc = osc;
+
+    this.osc.onended = () => {
+      this.osc.disconnect();
+      this.filter.disconnect();
+      this.gain.disconnect();
+    };
   }
 
   public connect(node: AudioNode) {
