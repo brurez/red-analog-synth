@@ -1,0 +1,55 @@
+.slider {
+    background-color: rgba(55, 89, 128, 0.22);
+    position: relative;
+    display: inline-block;
+    width: 47px;
+    height: 80px;
+    vertical-align: top;
+    text-align: center;
+    padding: 3px;
+    border-radius: 4px;
+}
+
+.slider-container {
+    height: 80px;
+    width: 50px;
+    background-image: url('../images/dx7-slider-rail.svg');
+    background-position: 5px 0;
+    overflow: hidden;
+    position: relative;
+    background-repeat: no-repeat;
+}
+
+.slider-container:focus {
+    outline: 2px solid rgba(255,255,255,0.15);
+}
+
+.slider-container:active {
+    outline: 2px solid rgba(255,255,255,0.2);
+}
+
+.param:last-child .slider-container {
+    width: 18px;
+}
+
+.slider-foreground {
+    width: 38px;
+    position: relative;
+}
+
+.slider .touch {
+    position: absolute;
+    cursor: pointer;
+    height: 18px;
+    width: 100%;
+}
+
+.slider-meter {
+    height: 100%;
+    width: 14px;
+    background-image: url('../images/dx7-slider-meter.svg');
+    background-position: 0 0;
+    position: absolute;
+    top: 3px;
+    left: 35px;
+}

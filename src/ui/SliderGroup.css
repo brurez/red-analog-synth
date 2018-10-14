@@ -1,0 +1,10 @@
+.slider-group {
+    background-color: red;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.slider-group .name {
+    font-size: 0.9em;
+    padding-left: 10px;
+}

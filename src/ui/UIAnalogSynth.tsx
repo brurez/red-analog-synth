@@ -7,6 +7,8 @@ import square from "../images/squareWave.svg";
 import triangle from "../images/triangleWave.svg";
 import Knob from "./Knob";
 import Select from "./Select";
+import Slider from "./Slider";
+import SliderGroup from "./SliderGroup";
 
 interface IProps {
   synth: AnalogSynth;
@@ -43,6 +45,34 @@ class UIAnalogSynth extends React.Component<IProps> {
           maxValue={30}
           size={54}
         />
+        <SliderGroup name="FILTER ADSR">
+          <React.Fragment>
+            <Slider
+              value={0}
+              minValue={0}
+              maxValue={100}
+              onChange={e => console.log(e)}
+            />
+            <Slider
+              value={50}
+              minValue={0}
+              maxValue={100}
+              onChange={e => console.log(e)}
+            />
+            <Slider
+              value={75}
+              minValue={0}
+              maxValue={100}
+              onChange={e => console.log(e)}
+            />
+            <Slider
+              value={100}
+              minValue={0}
+              maxValue={100}
+              onChange={e => console.log(e)}
+            />
+          </React.Fragment>
+        </SliderGroup>
       </div>
     );
   }
