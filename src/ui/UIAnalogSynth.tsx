@@ -33,7 +33,7 @@ class UIAnalogSynth extends React.Component<IProps> {
           value={synth.filterFreq}
           onChange={value => (synth.filterFreq = value)}
           label="CUTOFF"
-          minValue={0}
+          minValue={60}
           maxValue={14000}
           size={54}
         />
