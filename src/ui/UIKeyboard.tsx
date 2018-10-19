@@ -85,7 +85,6 @@ class UIKeyboard extends React.Component<IProps> {
 
   private handleMouseDown(pitch: string, octave: number): void {
     const { synth } = this.props;
-    console.log(pitch);
     const note = new Note(pitch, octave);
     synth.play(note);
   }

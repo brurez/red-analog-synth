@@ -9,6 +9,7 @@ import Knob from "./Knob";
 import Select from "./Select";
 import Slider from "./Slider";
 import SliderGroup from "./SliderGroup";
+import UIAnalyser from "./UIAnalyser";
 
 interface IProps {
   synth: AnalogSynth;
@@ -23,6 +24,7 @@ class UIAnalogSynth extends React.Component<IProps> {
 
     return (
       <div className="analog-synth">
+        <UIAnalyser analyser={synth.analyser} />
         <Select
           value={synth.wave}
           onChange={value => (synth.wave = value)}

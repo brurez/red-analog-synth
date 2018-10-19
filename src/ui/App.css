@@ -36,5 +36,17 @@
 }
 
 .analog-synth > div {
-  margin-right: 10px
+  margin-right: 8px
+}
+
+.ui-analyser {
+  background-color: gray;
+  padding: 12px 5px;
+  border-radius: 8px;
+}
+
+.ui-analyser canvas {
+  border: 10px solid black;
+  border-right-width: 2px;
+  border-left-width: 2px;
 }

@@ -47,21 +47,24 @@ class AnalogSynth {
   }
 
   public static waves = ["sawtooth", "triangle", "square", "sine"];
+  public analyser: AnalyserNode;
+
+  @observable public analyserData: Uint8Array;
   @observable private $filterFreq: number = 2000;
   @observable private $filterQ: number = 1;
-  @observable private $wave: number = 0;
 
+  @observable private $wave: number = 0;
   @observable private voices: AnalogVoice[];
   private ac: AudioContext;
-  private output: AudioNode;
 
   constructor(ac: AudioContext) {
     this.voices = [];
+    this.buildAnalyser(ac);
     this.ac = ac;
   }
 
   public connectTo(output: AudioNode) {
-    this.output = output;
+    this.analyser.connect(output);
   }
 
   public play(note: Note): void {
@@ -71,7 +74,7 @@ class AnalogSynth {
     voice.osc.type = AnalogSynth.waves[this.wave];
     voice.filter.frequency.value = this.filterFreq;
     voice.filter.Q.value = this.filterQ;
-    voice.connect(this.ac.destination);
+    voice.connect(this.analyser);
     voice.play(note);
 
     this.voices.push(voice);
@@ -89,6 +92,15 @@ class AnalogSynth {
     this.voices[index].stop();
     this.voices.splice(index, 1);
     return true;
+  }
+
+  private buildAnalyser(ac: AudioContext): void {
+    const analyser = ac.createAnalyser();
+    analyser.fftSize = 256;
+    const bufferLength = analyser.frequencyBinCount;
+    const analyserData = new Uint8Array(bufferLength);
+    this.analyser = analyser;
+    this.analyserData = analyserData;
   }
 }
 
