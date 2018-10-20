@@ -56,7 +56,7 @@ class UIKeyboard extends React.Component<IProps> {
         {[octave, octave + 1].map(oct => (
           <div key={oct} className="octave">
             {notes.map(note => (
-              <React.Fragment>
+              <React.Fragment key={`${note[1]}${oct}`}>
                 {note[0] && (
                   <Key
                     note={note[0]}
@@ -65,6 +65,7 @@ class UIKeyboard extends React.Component<IProps> {
                     onMouseDown={() => this.handleMouseDown(note[0], oct)}
                     onMouseUp={() => this.handleMouseUp(note[0], oct)}
                     onMouseLeave={() => this.handleMouseUp(note[0], oct)}
+                    key={`${note[0]}${oct}`}
                   />
                 )}
                 <Key
@@ -74,6 +75,7 @@ class UIKeyboard extends React.Component<IProps> {
                   onMouseDown={() => this.handleMouseDown(note[1], oct)}
                   onMouseUp={() => this.handleMouseUp(note[1], oct)}
                   onMouseLeave={() => this.handleMouseUp(note[1], oct)}
+                  key={`${note[1]}${oct}`}
                 />
               </React.Fragment>
             ))}

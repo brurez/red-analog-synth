@@ -92,7 +92,7 @@ const LightSelect = props => {
   return (
     <div className="light-select">
       {items.map((item, index) => (
-        <div className="item">
+        <div className="item" key={index}>
           <img src={item} width={20} />
           <div className={cs("light", { on: selected === index })} />
         </div>

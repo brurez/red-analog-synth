@@ -50,10 +50,28 @@ class UIAnalogSynth extends React.Component<IProps> {
         <SliderGroup name="FILTER ADSR">
           <React.Fragment>
             <Slider
-              value={synth.filterAdsr.release}
+              value={synth.filterAdsr.a}
+              minValue={0}
+              maxValue={2}
+              onChange={value => synth.filterAdsr.a = value}
+            />
+            <Slider
+              value={synth.filterAdsr.d}
+              minValue={0}
+              maxValue={2}
+              onChange={value => synth.filterAdsr.d = value}
+            />
+            <Slider
+              value={synth.filterAdsr.s}
               minValue={0}
               maxValue={1}
-              onChange={value => synth.filterAdsr.release = value}
+              onChange={value => synth.filterAdsr.s = value}
+            />
+            <Slider
+              value={synth.filterAdsr.r}
+              minValue={0}
+              maxValue={2}
+              onChange={value => synth.filterAdsr.r = value}
             />
           </React.Fragment>
         </SliderGroup>

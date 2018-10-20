@@ -3,10 +3,10 @@ import AnalogVoice from "./AnalogVoice";
 import Note from "./Note";
 
 interface IAdsr {
-  attack: number;
-  decay: number;
-  sustain: number;
-  release: number;
+  a: number;
+  d: number;
+  s: number;
+  r: number;
 }
 
 class AnalogSynth {
@@ -17,6 +17,10 @@ class AnalogSynth {
   }
 
   set filterAdsr(value) {
+    this.voices.forEach(v => {
+      // @ts-ignore
+      v.filterAdsr = value;
+    });
     this.$filterAdsr = value;
   }
 
@@ -69,10 +73,10 @@ class AnalogSynth {
   @observable private $filterFreq: number = 2000;
   @observable private $filterQ: number = 1;
   @observable private $filterAdsr: IAdsr = {
-    attack: 0,
-    decay: 0,
-    sustain: 1,
-    release: 0,
+    a: 0,
+    d: 0,
+    s: 1,
+    r: 0,
   };
 
   @observable private $wave: number = 0;
@@ -96,6 +100,7 @@ class AnalogSynth {
     voice.osc.type = AnalogSynth.waves[this.wave];
     voice.filter.frequency.value = this.filterFreq;
     voice.filter.Q.value = this.filterQ;
+    voice.filterAdsr = this.filterAdsr;
     voice.connect(this.analyser);
     voice.play(note);
 
