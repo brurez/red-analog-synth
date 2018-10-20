@@ -2,7 +2,23 @@ import { computed, observable } from "mobx";
 import AnalogVoice from "./AnalogVoice";
 import Note from "./Note";
 
+interface IAdsr {
+  attack: number;
+  decay: number;
+  sustain: number;
+  release: number;
+}
+
 class AnalogSynth {
+
+  @computed
+  get filterAdsr() {
+    return this.$filterAdsr;
+  }
+
+  set filterAdsr(value) {
+    this.$filterAdsr = value;
+  }
 
   @computed
   get wave() {
@@ -52,6 +68,12 @@ class AnalogSynth {
   @observable public analyserData: Uint8Array;
   @observable private $filterFreq: number = 2000;
   @observable private $filterQ: number = 1;
+  @observable private $filterAdsr: IAdsr = {
+    attack: 0,
+    decay: 0,
+    sustain: 1,
+    release: 0,
+  };
 
   @observable private $wave: number = 0;
   @observable private voices: AnalogVoice[];

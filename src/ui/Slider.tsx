@@ -14,21 +14,23 @@ interface IState {
 }
 
 class Slider extends React.Component<IProps, IState> {
+  public state: Readonly<IState> = {
+    clientY: 0,
+  };
   public render() {
     const { value, minValue, maxValue } = this.props;
     const ratio = (value * 79) / (maxValue - minValue);
     return (
       <div className="slider">
-        <div className="slider-container">
-          <div
-            className="slider-foreground"
-            style={{ top: `calc(${ratio}%)` }}
-            draggable={true}
-            onDragStart={e => this.handleDragStart(e)}
-            onDrag={e => this.handleDrag(e)}
-            onDragEnd={e => this.handleDrag(e)}
-          >
-            <div className="touch" />
+        <div
+          className="slider-container"
+          onMouseMove={e => this.handleMouseMove(e)}
+        >
+          <div className="slider-foreground" style={{ top: `calc(${ratio}%)` }}>
+            <div
+              className="touch"
+              draggable={false}
+            />
             <img src={foreground} />
           </div>
         </div>
@@ -37,20 +39,13 @@ class Slider extends React.Component<IProps, IState> {
     );
   }
 
-  private handleDragStart(e) {
-    const img = new Image();
-    const { clientY } = e;
-    e.dataTransfer.setDragImage(img, 10, 10);
-    this.setState({ clientY });
-  }
-
-  private handleDrag(e) {
-    const { clientY } = e;
+  private handleMouseMove(e) {
+    const { clientY, buttons } = e;
     const { maxValue: max, minValue: min, value } = this.props;
 
-    if (clientY !== this.state.clientY) {
-      const delta = clientY - this.state.clientY;
-      let result = value + (delta * (max - min));
+    if (buttons && clientY !== this.state.clientY) {
+      const delta = (clientY - this.state.clientY);
+      let result = value + delta * (max - min) / 50;
       result = result > max ? max : result;
       result = result < min ? min : result;
 
