@@ -71,11 +71,11 @@ class AnalogSynth {
 
   @observable public analyserData: Uint8Array;
   @observable private $filterFreq: number = 2000;
-  @observable private $filterQ: number = 1;
+  @observable private $filterQ: number = 5;
   @observable private $filterAdsr: IAdsr = {
-    a: 0,
-    d: 0,
-    s: 1,
+    a: 0.1,
+    d: 0.3,
+    s: 0.3,
     r: 0,
   };
 

@@ -52,7 +52,7 @@ class UIAnalogSynth extends React.Component<IProps> {
             <Slider
               value={synth.filterAdsr.a}
               minValue={0}
-              maxValue={2}
+              maxValue={3}
               onChange={value => synth.filterAdsr.a = value}
             />
             <Slider

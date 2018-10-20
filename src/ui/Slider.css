@@ -54,3 +54,22 @@
     top: 3px;
     left: 35px;
 }
+
+.slider .control {
+    -webkit-appearance: none;
+    width: 80px;
+    transform-origin: 17px 15px;
+    transform: rotate(90deg);
+    direction: rtl;
+    background-color: transparent;
+}
+
+.slider .control::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 30px;
+    background: black;
+    cursor: pointer; /* Cursor on hover */
+    border: 1px solid #2f2f2f;
+    border-left: 2px solid #7a7a7a;
+}
