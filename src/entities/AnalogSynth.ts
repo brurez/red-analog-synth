@@ -70,6 +70,9 @@ class AnalogSynth {
   public analyser: AnalyserNode;
 
   @observable public analyserData: Uint8Array;
+  private gain: GainNode;
+  private compressor: DynamicsCompressorNode;
+  private readonly merger: ChannelMergerNode;
   @observable private $filterFreq: number = 2000;
   @observable private $filterQ: number = 5;
   @observable private $filterAdsr: IAdsr = {
@@ -81,11 +84,18 @@ class AnalogSynth {
 
   @observable private $wave: number = 0;
   @observable private voices: AnalogVoice[];
-  private ac: AudioContext;
+  private readonly ac: AudioContext;
 
   constructor(ac: AudioContext) {
     this.voices = [];
     this.buildAnalyser(ac);
+    this.compressor = ac.createDynamicsCompressor();
+    this.merger = ac.createChannelMerger(10);
+    this.gain = ac.createGain();
+    this.gain.gain.value = 1.4;
+    this.merger.connect(this.compressor);
+    this.compressor.connect(this.gain);
+    this.gain.connect(this.analyser);
     this.ac = ac;
   }
 
@@ -101,7 +111,7 @@ class AnalogSynth {
     voice.filter.frequency.value = this.filterFreq;
     voice.filter.Q.value = this.filterQ;
     voice.filterAdsr = this.filterAdsr;
-    voice.connect(this.analyser);
+    voice.connect(this.merger);
     voice.play(note);
 
     this.voices.push(voice);
@@ -117,13 +127,14 @@ class AnalogSynth {
     }
 
     this.voices[index].stop();
+    this.voices[index].disconnect();
     this.voices.splice(index, 1);
     return true;
   }
 
   private buildAnalyser(ac: AudioContext): void {
     const analyser = ac.createAnalyser();
-    analyser.fftSize = 256;
+    analyser.fftSize = 512;
     const bufferLength = analyser.frequencyBinCount;
     const analyserData = new Uint8Array(bufferLength);
     this.analyser = analyser;

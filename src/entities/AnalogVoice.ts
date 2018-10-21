@@ -37,6 +37,10 @@ class AnalogVoice {
     this.gain.connect(node);
   }
 
+  public disconnect() {
+    this.gain.disconnect();
+  }
+
   public play(note: Note) {
     const { a, d, s } = this.filterAdsr;
     this.osc.frequency.value = note.frequency;
