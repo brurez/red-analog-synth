@@ -92,7 +92,7 @@ class AnalogSynth {
     this.compressor = ac.createDynamicsCompressor();
     this.merger = ac.createChannelMerger(10);
     this.gain = ac.createGain();
-    this.gain.gain.value = 1.4;
+    this.gain.gain.value = 1;
     this.merger.connect(this.compressor);
     this.compressor.connect(this.gain);
     this.gain.connect(this.analyser);

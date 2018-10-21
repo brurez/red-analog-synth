@@ -4,14 +4,15 @@
 
 .light-select .light {
     border-radius: 50%;
-    border: 1px solid black;
+    border: 1px solid darkred;
     width: 10px;
     height: 10px;
     background-color: black;
 }
 
 .light-select .light.on {
-    background-color: red;
+    background-color: lightblue;
+    box-shadow: 0 0 10px 3px rgba(173, 216, 230, 0.6);
 }
 
 .light-select .item {
