@@ -2,8 +2,8 @@
   "name": "wave",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://brurez.github.io/red-analog-synth",
   "dependencies": {
-    "adsr-envelope": "^1.0.0",
     "classnames": "^2.2.6",
     "hotkeys-js": "^3.3.8",
     "lodash": "^4.17.11",
@@ -11,21 +11,22 @@
     "mobx-react": "^5.2.8",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-rotary-knob": "^1.1.1",
-    "react-rotary-knob-skin-pack": "^1.0.2",
     "react-scripts-ts": "3.1.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@types/jest": "^23.3.5",
     "@types/node": "^10.11.7",
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
+    "gh-pages": "^2.0.1",
     "typescript": "^3.1.2",
     "web-audio-test-api": "^0.5.2"
   }
